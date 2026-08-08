@@ -1,0 +1,29 @@
+services:
+
+  postgres:
+
+    image: postgres:16
+
+    container_name: mimic_postgres
+
+    environment:
+
+      POSTGRES_USER: dh
+
+      POSTGRES_PASSWORD: dhpass
+
+      POSTGRES_DB: mimiciv
+
+    ports:
+
+      - "5433:5432"
+
+    volumes:
+
+      - /Volumes/dhwon_lab1/mimic/postgres_data:/var/lib/postgresql/data
+
+      - /Volumes/dhwon_lab1/mimic/raw:/mimic/raw
+
+      - ./sql:/sql
+
+    restart: unless-stopped

@@ -1,0 +1,51 @@
+# .gitignore for Hospital_ICU
+# Save as  Hospital_ICU/.gitignore  (with the leading dot)
+
+# ---------------------------------------------------------------------------
+# 1. Personal credentials — never publish.
+#    The CITI certificates carry your PhysioNet ID number.
+# ---------------------------------------------------------------------------
+pysionet_credentials/
+
+# ---------------------------------------------------------------------------
+# 2. All analysis outputs.
+#    result/ mixes aggregate tables with patient-level rows
+#    (23B_patient_level_pure_trajectory.csv, 24_*_patient_level.csv,
+#     26_adjusted_validation_analysis_dataset.csv, 21C_complete_trajectory_*.csv).
+#    MIMIC-IV is credentialed access and the PhysioNet DUA forbids
+#    redistributing patient-level data, so the whole folder stays local.
+#
+#    The Streamlit app is unaffected: it reads its own copy at
+#    streamlit/26_all_model_coefficients.csv, which is a fitted-coefficient
+#    table (model / term / coefficient / OR / CI) — not patient data.
+# ---------------------------------------------------------------------------
+result/
+
+# ---------------------------------------------------------------------------
+# 3. Raw data, in case any lands here later
+# ---------------------------------------------------------------------------
+data/
+*.csv.gz
+*.7z
+*.dump
+*.sql.gz
+*.pages
+
+# ---------------------------------------------------------------------------
+# 4. Housekeeping
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.streamlit/secrets.toml
+
+.DS_Store
+._*
+.idea/
+.vscode/
+*.swp
+
+# Office lock files (e.g. ~$BI_ICU_Pipeline_Flow.pptx)
+~$*
