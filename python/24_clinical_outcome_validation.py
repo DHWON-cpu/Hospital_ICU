@@ -1,5 +1,22 @@
 # 24_clinical_outcome_validation.py
 
+"""
+input_content : 22B_primary_cluster_labels.csv, 22B_complete_cluster_labels.csv,
+                results/14_outcome_labels.csv (mortality_1d / 3d / 7d)
+output_content : results/24_clinical_outcome_validation/ — patient-level label-outcome tables for both
+                 cohorts, cluster-specific mortality rates, risk effects (risk difference, relative risk,
+                 odds ratio, each with 95% CI, plus Fisher exact p), primary-vs-complete sensitivity
+                 comparison, text report, and 2 PNGs (grouped rate bars, relative-risk forest plot)
+calls : scipy fisher_exact, matplotlib, numpy, pandas, math; local RR / OR / RD confidence-interval helpers
+side effect : pins numerical-library threads to 1, creates the 24 output directory,
+              writes 7 CSVs + 2 PNGs + a .txt report, prints effect tables to stdout
+responsibility : Step 24 — test whether trajectory cluster membership (Cluster 0 reference, Cluster 1
+                 exposure) tracks short-term mortality, with Haldane-Anscombe correction applied only for
+                 zero cells, and confirm the gradient reproduces in the complete-case cohort; the report
+                 states this establishes association, not causation, and defers phenotype naming until
+                 trajectory direction and outcome gradient agree.
+"""
+
 from __future__ import annotations
 
 import os

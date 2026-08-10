@@ -1,5 +1,23 @@
 # 22B_pure_trajectory_clustering.py
 
+""" python
+input_content : 21B_eligible_trajectory_winsorized.csv (primary cohort),
+                21C_complete_trajectory_winsorized.csv (complete-case cohort);
+                4 pure change features only (lactate_clearance_pct + creatinine/WBC/platelet percent_change),
+                baseline first_value features and PCA deliberately excluded
+output_content : results/22B_pure_trajectory_clustering/ — k-selection scores (k = 2-6) for both cohorts,
+                 cluster labels, scaled and raw (median) centroids, Hungarian-matched centroid pairs,
+                 overlap agreement table, scaled matrices, text summary
+calls : sklearn KMeans / silhouette / Calinski-Harabasz / Davies-Bouldin / adjusted_rand_score / RobustScaler,
+        scipy linear_sum_assignment, numpy, pandas
+side effect : pins BLAS-OMP-MKL-VECLIB-NUMEXPR threads to 1 before importing array libraries (determinism),
+              creates the 22B output directory, writes 12 CSVs and a .txt summary, prints metric tables to stdout
+responsibility : Step 22B — select k on the primary cohort via a weighted rank of silhouette (0.40),
+                 Calinski-Harabasz (0.30) and Davies-Bouldin (0.30) subject to a minimum cluster size
+                 (>=100 and >=1%), fit the final K-means model in both cohorts, and quantify reproducibility
+                 with ARI, centroid correlation, and matched membership agreement on overlapping stays.
+"""
+
 from __future__ import annotations
 
 import os

@@ -1,5 +1,24 @@
 # 26_adjusted_clinical_validation_v2.py
 
+"""
+input_content : 22B_primary_cluster_labels.csv, results/15_modeling_dataset.csv (covariate source),
+                results/14_outcome_labels.csv; covariates resolved by alias search
+                (age, sex, ICU type, baseline lactate/creatinine/WBC/platelet first values)
+output_content : results/26_adjusted_clinical_validation/ — analysis dataset, model fit summary
+                 (n, events, AIC, BIC-deviance, McFadden pseudo-R2, convergence), RIWT adjusted effects,
+                 all model coefficients with ORs and 95% CIs, covariate missingness table, numeric VIF table,
+                 forest plot PNG, text report
+calls : statsmodels GLM (Binomial, HC0 robust covariance), variance_inflation_factor, matplotlib, numpy, pandas
+side effect : pins numerical-library threads to 1, creates the 26 output directory,
+              writes 6 CSVs + 1 PNG + a .txt report, prints resolved covariates and effect tables to stdout
+responsibility : Step 26 (v1) — test whether the RIWT-mortality association survives confounder adjustment
+                 via four sequential logistic models (RIWT only -> + age/sex -> + ICU type ->
+                 + baseline biomarkers) at 7-, 3-, and 1-day endpoints, with numeric covariates
+                 median-imputed, categorical missingness kept as an explicit level, trajectory-defining
+                 change variables deliberately excluded from the adjustment set, and 1-day flagged
+                 exploratory due to outcome-window overlap.
+"""
+
 from __future__ import annotations
 
 import io

@@ -1,5 +1,15 @@
 # 14_outcome_labels.py
 
+"""
+input_content : mimiciv_derived.cohort_icu_adult (74,829 adult ICU stays) LEFT JOIN mimiciv_hosp.admissions.deathtime
+output_content : results/14_outcome_labels.csv — per stay_id identifiers, intime/outtime/deathtime,
+                 and binary mortality_1d / mortality_3d / mortality_7d labels measured from ICU intime
+calls : docker exec psql (\\copy ... TO STDOUT WITH CSV HEADER), subprocess, pandas
+side effect : creates results/ directory, writes OUTPUT_PATH, prints mortality counts and rates to stdout
+responsibility : Step 14 — build the short-term mortality endpoints used for phenotype validation;
+                 note the 1-day endpoint overlaps the 24h trajectory window and is exploratory only.
+"""
+
 from pathlib import Path
 import subprocess
 import pandas as pd

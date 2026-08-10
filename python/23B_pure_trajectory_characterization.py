@@ -1,5 +1,24 @@
 # 23B_pure_trajectory_characterization.py
 
+"""
+input_content : 22B_primary_cluster_labels.csv (k = 2 phenotype assignments),
+                21B_eligible_trajectory_winsorized.csv (raw-scale features),
+                22B_primary_pure_trajectory_scaled.csv (robust-scaled features);
+                4 pure change features only
+output_content : results/23B_pure_trajectory_characterization/ — patient-level merged table,
+                 feature statistics (median/IQR per cluster, Mann-Whitney U, rank-biserial effect,
+                 BH-FDR q-value), phenotype signature with direction labels, effect-size ranking,
+                 direction summary, cluster profile table, text report, and 4 PNG figures
+                 (volcano, patient-level heatmap, radar, median profile)
+calls : scipy mannwhitneyu, matplotlib, numpy, pandas; local benjamini_hochberg implementation
+side effect : pins numerical-library threads to 1, creates the 23B output directory,
+              writes 6 CSVs + 4 PNGs + a .txt report, prints statistics tables to stdout
+responsibility : Step 23B — characterize what separates the two trajectory clusters (RBT vs RIWT candidates)
+                 with nonparametric tests, FDR-corrected effect sizes, and directional interpretation
+                 (improving / deteriorating / stable per biomarker sign convention), while explicitly
+                 withholding clinical phenotype names until outcome validation in later steps.
+"""
+
 from __future__ import annotations
 
 import os

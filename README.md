@@ -24,7 +24,7 @@ Using only four biochemical markers that are already measured serially in almost
 Two patients who look identical on an admission severity score may be moving in opposite directions, one stabilizing and the other deteriorating, and conventional risk instruments describe where a patient is rather than where they are heading. Lactate reflects tissue perfusion and its clearance is an established resuscitation target; creatinine indexes evolving acute kidney injury; WBC and platelet trajectories reflect the inflammatory and coagulation response. Together they summarize perfusion, renal and inflammatory dynamics without requiring any data collection beyond routine care.
 
 ## Business Intelligence: streamlit site
-[< Streamlit 앱 URL>](https://)
+[< Streamlit 앱 URL>][(https://hospitalicu-8u8kdwuhdbdvmp7qjh4wrx.streamlit.app)](https://hospitalicu-8u8kdwuhdbdvmp7qjh4wrx.streamlit.app)
 
 ## Conclusion
 
@@ -41,7 +41,7 @@ On 74,829 adult ICU stays from MIMIC-IV v3.1, an unsupervised K-means pipeline i
 [8] Caliński T, Harabasz J. A dendrite method for cluster analysis. Communications in Statistics. 1974;3(1):1–27.
 [9] Davies DL, Bouldin DW. A cluster separation measure. IEEE Transactions on Pattern Analysis and Machine Intelligence. 1979;PAMI-1(2):224–227.
 [10] Pedregosa F, Varoquaux G, Gramfort A, et al. Scikit-learn: machine learning in Python. Journal of Machine Learning Research. 2011;12:2825–2830.
-[11] Streamlit Inc. Streamlit documentation. [Online]. Available: https://docs.streamlit.io
+[11] Streamlit Inc. Streamlit documentation. [Online]. Available: https://hospitalicu-8u8kdwuhdbdvmp7qjh4wrx.streamlit.app
 
 ## Project Structure
 

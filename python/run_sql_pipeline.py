@@ -1,10 +1,23 @@
 # run_sql_pipeline.py
 
+"""
+input_content : sql/01_validation.sql, 02_cohort.sql, 03_vitals.sql, 04_labs.sql,
+                05_trajectory.sql, 06_dataset_summary.sql (executed in this fixed order)
+output_content : none returned; tables and views created inside the mimiciv PostgreSQL database
+                 (row-count validation, adult ICU cohort, vitals, labs, first-24h trajectory,
+                 dataset summary), plus psql output streamed to stdout
+calls : docker exec -i mimic_postgres psql -v ON_ERROR_STOP=1, subprocess
+side effect : mutates the database schema and contents; exits with status 1 on any failure
+responsibility : Run the SQL half of the pipeline sequentially with fail-fast semantics — each file is
+                 checked for existence, piped to psql via stdin, and a non-zero return code aborts the
+                 whole run so no downstream step consumes partially built tables.
+"""
+
+
 from pathlib import Path
 import subprocess
 import sys
 from typing import List
-
 
 PROJECT_DIR = Path("/Volumes/dhwon_lab1/ICU-Trajectory-Lab")
 SQL_DIR = PROJECT_DIR / "sql"

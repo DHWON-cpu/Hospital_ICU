@@ -1,5 +1,20 @@
 # 21B_trajectory_cohort_selection.py
 
+"""
+input_content : results/13_temporal_features.csv (long trajectory features),
+                results/14_outcome_labels.csv (optional, for eligible-vs-excluded comparison)
+output_content : results/21B_trajectory_cohort_selection/ — eligibility flags, eligible long/wide matrices,
+                 winsorized / median-imputed / robust-scaled 8-feature clustering matrix
+                 (lactate first_value + clearance_pct; creatinine/WBC/platelet first_value + percent_change),
+                 cohort counts, exclusion reasons, winsorization bounds, outcome comparison, text report
+calls : pandas, numpy, sklearn SimpleImputer(median), sklearn RobustScaler
+side effect : creates the 21B output directory, writes 10+ CSVs and a .txt report, prints cohort tables to stdout
+responsibility : Step 21B — apply the eligibility rule (valid lactate trajectory required, plus >=2 valid
+                 trajectories among creatinine/WBC/platelet), yielding 24,799 eligible stays, and emit the
+                 audited, preprocessed feature matrix for K-means phenotyping while documenting the selection
+                 bias toward repeatedly tested (more intensively monitored) patients.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path

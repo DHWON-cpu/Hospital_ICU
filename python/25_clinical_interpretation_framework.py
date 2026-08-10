@@ -1,5 +1,24 @@
 # 25_clinical_interpretation_framework.py
 
+"""
+input_content : 23B_pure_trajectory_signature.csv, 23B_cluster_profile_table.csv,
+                24_primary_risk_effects.csv, 24_complete_risk_effects.csv
+output_content : results/25_clinical_interpretation_framework/ — phenotype framework table
+                 (RBT / RIWT naming, risk zone, prevalence, four biomarker medians with direction labels,
+                 1/3/7-day mortality rates, 7-day RR with 95% CI and complete-cohort RR),
+                 dashboard display table, clinical comparison summary, descriptive zone rules,
+                 framework figure PNG, text report
+calls : matplotlib, numpy, pandas
+side effect : pins numerical-library threads to 1, creates the 25 output directory,
+              writes 4 CSVs + 1 PNG + a .txt report, prints the framework table to stdout
+responsibility : Step 25 — assign the final clinical phenotype names now that trajectory direction and
+                 outcome gradient agree (Cluster 0 = Recovery-like Biochemical Trajectory, Cluster 1 =
+                 Renal-inflammatory Worsening Trajectory), and package them into the display layer that
+                 feeds the Streamlit application, with explicit caution language: centroid descriptions
+                 are not diagnostic thresholds, lower-risk is not "safe", and external prospective
+                 validation is required before clinical deployment.
+"""
+
 from __future__ import annotations
 
 import os

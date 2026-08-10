@@ -1,5 +1,23 @@
 # 21C_trajectory_sensitivity_cohort.py
 
+"""
+input_content : results/13_temporal_features.csv, 21B_trajectory_eligibility_flags.csv,
+                results/14_outcome_labels.csv (optional)
+output_content : results/21C_trajectory_sensitivity_cohort/ — cohort flags with
+                 complete_four_trajectory_cohort / trajectory_pattern (L_C_W_P) / cohort_group,
+                 availability-pattern counts, cohort counts, primary-vs-complete outcome comparison,
+                 complete-cohort 8-feature matrix (raw / winsorized 1-99% / robust-scaled),
+                 winsorization bounds, text report
+calls : pandas, numpy, sklearn RobustScaler
+side effect : creates the 21C output directory, writes 8 CSVs and a .txt report, prints cohort tables to stdout
+responsibility : Step 21C — derive the complete-case sensitivity cohort (all four biomarker trajectories
+                 present, n = 24,034) with no trajectory-feature imputation, so the K-means phenotypes from
+                 the primary cohort can be tested for reproducibility (ARI, centroid correlation,
+                 mortality gradient) rather than being an artifact of median imputation.
+"""
+
+
+
 from __future__ import annotations
 
 from pathlib import Path

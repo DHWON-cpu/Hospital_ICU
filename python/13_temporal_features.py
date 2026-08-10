@@ -1,5 +1,19 @@
 # 13_temporal_features.py
 
+"""
+input_content : mimiciv_derived.trajectory_first24h (first-24h vitals/labs long table), 8 CORE_VARIABLES
+output_content : results/13_temporal_features.csv — per stay_id x label trajectory features
+                 (first/last/peak, delta_value, percent_change, lactate_clearance_pct,
+                  slope_per_hour [first-to-last simple slope], mean/median/std/CV, availability flags)
+calls : docker exec psql (PostgreSQL COPY), subprocess, pandas
+side effect : creates results/ directory, atomic replace of temporary .tmp.csv into OUTPUT_CSV,
+               prints progress and validation report to stdout
+responsibility : Step 13 — aggregate first-24h MIMIC-IV time series into patient-variable trajectory
+                 features, with pre-flight Docker/container checks and output CSV validation
+                 (required columns, duplicates, measurement-count consistency).
+"""
+
+
 from __future__ import annotations
 
 from pathlib import Path

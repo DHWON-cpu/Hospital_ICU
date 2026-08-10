@@ -1,5 +1,18 @@
 # python/15_modeling_dataset.py
 
+"""
+input_content : results/12_feature_wide.csv, results/13_temporal_features.csv (long),
+                results/14_outcome_labels.csv
+output_content : results/15_modeling_dataset.csv — one row per stay_id, static wide features +
+                 pivoted temporal features ({label}_{first_value|last_value|delta_value|slope_per_hour|cv})
+                 + mortality_1d / 3d / 7d labels
+calls : pandas (read_csv, pivot_table, merge, to_csv)
+side effect : writes OUTPUT_PATH, prints row/column counts, outcome counts, rates, and missing-outcome tallies
+responsibility : Step 15 — reshape long trajectory features to wide, left-join features with outcome labels
+                 on stay_id, and produce the single analysis-ready modeling table for clustering and
+                 logistic-regression validation.
+"""
+
 from pathlib import Path
 import pandas as pd
 
